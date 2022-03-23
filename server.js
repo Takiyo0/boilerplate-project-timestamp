@@ -28,7 +28,8 @@ app.get("/api/:date", (req, res) => {
     let params = req.params,
         date = params.date;
     if (!date) return res.status(500).json({error: "Internal Server Error"});
-    console.log(new Date(date))
+    if (new Date(date).toString() === "Invalid Date") return res.json({error: "Invalid Date"});
+
     return res.json({
         unix: new Date(date).getTime() || new Date(Number(date)).getTime(),
         utc: new Date(date).toUTCString() !== "Invalid Date" ? new Date(date).toUTCString() : new Date(Number(date)).toUTCString()
